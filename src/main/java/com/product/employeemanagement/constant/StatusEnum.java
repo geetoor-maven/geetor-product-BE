@@ -1,6 +1,6 @@
 package com.product.employeemanagement.constant;
 
-public enum OnlineStatusEnum {
+public enum StatusEnum {
 
     ONLINE("ONL", "Online"),
     OFFLINE("OFF", "Offline");
@@ -8,7 +8,7 @@ public enum OnlineStatusEnum {
     private String code;
     private String value;
 
-    OnlineStatusEnum(String code, String value) {
+    StatusEnum(String code, String value) {
         this.code = code;
         this.value = value;
     }

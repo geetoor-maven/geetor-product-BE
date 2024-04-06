@@ -28,11 +28,8 @@ public class Employee extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "password")
-    private String password;
-
     @Column(name = "full_name")
-    private String fullname;
+    private String fullName;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -43,7 +40,5 @@ public class Employee extends BaseEntity {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "is_blocked")
-    private Boolean isBlocked;
 
 }
