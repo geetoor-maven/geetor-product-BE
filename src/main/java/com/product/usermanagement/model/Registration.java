@@ -1,11 +1,10 @@
-package com.product.employeemanagement.model;
+package com.product.usermanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.product.common.BaseEntity;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,30 +14,28 @@ import java.util.UUID;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Entity
-@Table(name = "employee", schema = "users")
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "registration", schema = "users")
 @Data
-public class Employee extends BaseEntity {
+public class Registration extends BaseEntity {
 
     @Id
-    @Column(name = "nip")
-    private String nip;
-
-    @Column(name = "email")
-    private String email;
+    @Column(name = "id")
+    private UUID id;
 
     @Column(name = "full_name")
     private String fullName;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "address")
-    private String address;
+    @JsonIgnore
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "status")
     private String status;
-
 
 }

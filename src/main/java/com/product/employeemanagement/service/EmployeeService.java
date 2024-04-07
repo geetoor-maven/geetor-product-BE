@@ -4,7 +4,7 @@ import com.product.common.constant.ReturnCode;
 import com.product.common.dto.BaseResponse;
 import com.product.common.dto.Meta;
 import com.product.common.exception.ItemAlreadyExistException;
-import com.product.employeemanagement.constant.StatusEnum;
+import com.product.common.constant.StatusEnum;
 import com.product.employeemanagement.dto.RequestCreateEmployeeDTO;
 import com.product.employeemanagement.model.Employee;
 import com.product.employeemanagement.repository.EmployeeRepository;
@@ -34,7 +34,7 @@ public class EmployeeService {
         employee.setFullName(dto.getName());
         employee.setPhoneNumber(dto.getNumberPhone());
         employee.setAddress(dto.getAddress());
-        employee.setStatus(StatusEnum.ONLINE.getCode());
+        employee.setStatus(StatusEnum.ACTIVE.getCode());
 
         employeeRepository.save(employee);
 

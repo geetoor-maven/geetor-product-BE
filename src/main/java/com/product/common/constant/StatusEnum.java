@@ -1,9 +1,9 @@
-package com.product.employeemanagement.constant;
+package com.product.common.constant;
 
 public enum StatusEnum {
 
-    ONLINE("ONL", "Online"),
-    OFFLINE("OFF", "Offline");
+    ACTIVE("ACT", "Active"),
+    INACTIVE("OFF", "Inactive");
 
     private String code;
     private String value;
