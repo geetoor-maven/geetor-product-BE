@@ -16,7 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "registration", schema = "users")
 @Data
-public class Registration extends BaseEntity {
+public class User extends BaseEntity {
 
     @Id
     @Column(name = "id")
