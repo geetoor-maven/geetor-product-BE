@@ -24,7 +24,7 @@ public class EmployeeService {
     public Object createEmployee(RequestCreateEmployeeDTO dto){
 
         // validasi jika nip sudah ada di dalam database
-        if (employeeRepository.existByNip(dto.getNip())) {
+        if (employeeRepository.existsByNip(dto.getNip())) {
             throw new ItemAlreadyExistException("User al ready created with nip : " + dto.getNip());
         }
 

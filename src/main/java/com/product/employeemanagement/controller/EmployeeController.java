@@ -20,7 +20,6 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
 
-
     @PostMapping(
             path = BasePath.BASE_PATH_EMPLOYEE + "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,

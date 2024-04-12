@@ -2,6 +2,7 @@ package com.product.config;
 
 import com.product.common.constant.BasePath;
 import com.product.common.exception.JWTAuthEntryPoint;
+import com.product.usermanagement.security.JWTRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,10 +34,15 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated()
                 .and();
 
-//        http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-//                .httpBasic(Customizer.withDefaults());
+        http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
+    }
+
+    @Bean
+    public JWTRequestFilter authenticationTokenFilter() {
+        return new JWTRequestFilter();
     }
 
     @Bean

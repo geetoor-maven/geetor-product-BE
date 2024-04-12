@@ -50,4 +50,6 @@ public class AuthService {
         BaseResponse<User> baseResponse = new BaseResponse<>(registration, new Meta(ReturnCode.SUCCESSFULLY_REGISTER.getStatusCode(), ReturnCode.SUCCESSFULLY_REGISTER.getMessage(), ""));
         return baseResponse.getCustomizeResponse("createUser");
     }
+
+    //public Object loginUser()
 }

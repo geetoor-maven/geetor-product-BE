@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Entity
-@Table(name = "registration", schema = "users")
+@Table(name = "user", schema = "users")
 @Data
 public class User extends BaseEntity {
 
