@@ -2,6 +2,7 @@ package com.product.usermanagement.controller;
 
 import com.product.common.constant.BasePath;
 import com.product.usermanagement.dto.RequestCreateUserDTO;
+import com.product.usermanagement.dto.RequestLoginDTO;
 import com.product.usermanagement.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,13 @@ public class AuthController {
         return new ResponseEntity<>(authService.createUser(dto), HttpStatus.OK);
     }
 
+    @PostMapping(
+            path = BasePath.BASE_API + "/login",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Object> loginUser(@Valid @RequestBody RequestLoginDTO dto) {
+        return new ResponseEntity<>(authService.loginUser(dto), HttpStatus.OK);
+    }
 
 }

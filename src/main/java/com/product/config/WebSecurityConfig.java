@@ -3,10 +3,14 @@ package com.product.config;
 import com.product.common.constant.BasePath;
 import com.product.common.exception.JWTAuthEntryPoint;
 import com.product.usermanagement.security.JWTRequestFilter;
+import com.product.usermanagement.service.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +24,8 @@ import java.util.Arrays;
 
 @Configuration
 public class WebSecurityConfig {
-
+    @Autowired
+    private CustomUserDetailService customUserDetailsServices;
     @Autowired
     JWTAuthEntryPoint jwtAuthEntryPoint;
     private String[] byPassUrl = {"/"};
@@ -30,7 +35,7 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers(BasePath.BASE_PATH_USER_REGIST + "/register",  byPassUrl[0]).permitAll()
+                .antMatchers(BasePath.BASE_PATH_USER_REGIST + "/register", BasePath.BASE_API + "/login",  byPassUrl[0]).permitAll()
                 .anyRequest().authenticated()
                 .and();
 
@@ -45,6 +50,19 @@ public class WebSecurityConfig {
         return new JWTRequestFilter();
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(customUserDetailsServices);
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
+    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
