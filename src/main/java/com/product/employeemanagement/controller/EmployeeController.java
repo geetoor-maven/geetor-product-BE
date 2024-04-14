@@ -2,6 +2,7 @@ package com.product.employeemanagement.controller;
 
 import com.product.common.constant.BasePath;
 import com.product.employeemanagement.dto.RequestCreateEmployeeDTO;
+import com.product.employeemanagement.dto.RequestListEmployeeDTO;
 import com.product.employeemanagement.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,6 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-
     @PostMapping(
             path = BasePath.BASE_PATH_EMPLOYEE + "/create",
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -28,4 +28,13 @@ public class EmployeeController {
     public ResponseEntity<Object> createEmployee(@Valid @RequestBody RequestCreateEmployeeDTO dto){
         return new ResponseEntity<>(employeeService.createEmployee(dto), HttpStatus.OK);
     }
+
+    @PostMapping(
+            path = BasePath.BASE_PATH_EMPLOYEE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> findListEmployee(@Valid @RequestBody RequestListEmployeeDTO dto){
+        return new ResponseEntity<>(employeeService.listEmployee(dto), HttpStatus.OK);
+    }
+
 }

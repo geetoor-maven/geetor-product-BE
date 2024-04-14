@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ReturnCode {
+    SUCCESSFULLY_FIND_EMPLOYEE(200, "{0} Berhasil menemukan employee"),
     SUCCESSFULLY_LOGIN(200, "Login Berhasil"),
     FAILED_SERVER_INTERNAL_SERVER_ERROR(500, "Internal server error"),
     FAILED_BAD_REQUEST(400, "Request Tidak Sesuai"),
