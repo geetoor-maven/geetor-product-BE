@@ -7,8 +7,7 @@ import com.product.common.dto.Meta;
 import com.product.common.exception.ItemAlreadyExistException;
 import com.product.common.constant.StatusEnum;
 import com.product.common.exception.ResourceNotFoundException;
-import com.product.employeemanagement.dto.RequestCreateEmployeeDTO;
-import com.product.employeemanagement.dto.RequestListEmployeeDTO;
+import com.product.employeemanagement.dto.*;
 import com.product.employeemanagement.model.Employee;
 import com.product.employeemanagement.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -82,4 +81,56 @@ public class EmployeeService {
         BaseResponse<CustomPageAble<Employee>> baseResponse = new BaseResponse<>(customPage, new Meta(ReturnCode.SUCCESSFULLY_FIND_EMPLOYEE.getStatusCode(), ReturnCode.SUCCESSFULLY_FIND_EMPLOYEE.getMessage(), ""));
         return baseResponse.getCustomizeResponse("employee_list");
     }
+
+    @Transactional
+    public Object updateEmployee(RequestUpdateEmployeeDTO dto){
+
+        Optional<Employee> theEmployee = employeeRepository.findByNip(dto.getNip());
+        if (theEmployee.isEmpty()){
+            throw new ResourceNotFoundException("Employee with nip " + dto.getNip() + " not found");
+        }
+
+        theEmployee.get().setEmail(dto.getEmail() != null ? dto.getEmail() : theEmployee.get().getEmail());
+        theEmployee.get().setFullName(dto.getName() != null ? dto.getName() : theEmployee.get().getFullName());
+        theEmployee.get().setPhoneNumber(dto.getNumberPhone() != null ? dto.getNumberPhone() : theEmployee.get().getPhoneNumber());
+        theEmployee.get().setAddress(dto.getAddress() != null ? dto.getAddress() : theEmployee.get().getAddress());
+
+        employeeRepository.save(theEmployee.get());
+
+        BaseResponse<Employee> baseResponse = new BaseResponse<>(theEmployee.get(), new Meta(ReturnCode.SUCCESSFULLY_UPDATE.getStatusCode(), ReturnCode.SUCCESSFULLY_UPDATE.getMessage(),""));
+        return baseResponse.getCustomizeResponse("update_employee");
+    }
+
+    @Transactional(readOnly = true)
+    public Object readEmployee(String nip){
+
+        Optional<Employee> theEmployee = employeeRepository.findByNip(nip);
+        if (theEmployee.isEmpty()){
+            throw new ResourceNotFoundException("Employee with nip " + nip + " not found");
+        }
+
+        BaseResponse<Employee> baseResponse = new BaseResponse<>(theEmployee.get(), new Meta(ReturnCode.SUCCESSFULLY_FIND_EMPLOYEE.getStatusCode(), ReturnCode.SUCCESSFULLY_FIND_EMPLOYEE.getMessage(),""));
+        return baseResponse.getCustomizeResponse("employee");
+    }
+
+
+    @Transactional
+    public Object deleteEmployee(RequestDeleteEmployeeDTO dto){
+
+        Optional<Employee> theEmployee = employeeRepository.findByNip(dto.getNip());
+        if (theEmployee.isEmpty()){
+            throw new ResourceNotFoundException("Employee with nip " + dto.getNip() + " not found");
+        }
+
+        employeeRepository.delete(theEmployee.get());
+
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setStatus(ReturnCode.SUCCESSFULLY_DELETE.getStatusCode());
+        responseDTO.setMessage(ReturnCode.SUCCESSFULLY_DELETE.getMessage());
+
+        BaseResponse<ResponseDTO> baseResponse = new BaseResponse<>(responseDTO, new Meta(ReturnCode.SUCCESSFULLY_DELETE.getStatusCode(), ReturnCode.SUCCESSFULLY_DELETE.getMessage(),""));
+        return baseResponse.getCustomizeResponse("employee");
+    }
+
+
 }
